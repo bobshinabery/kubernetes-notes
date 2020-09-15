@@ -13,3 +13,47 @@ spec:
   - name: nginx-container
     image: nginx
     resources: 
+      requests:
+        memory: 1G
+        cpu: 1
+      limits:
+        memory: 2G
+        cpu: 2
+  
+  tolerations:
+    key: "app"
+    operator: "Equal"
+    value: "blue"
+    effect: NoSchedule
+
+  nodeSelector:
+    size: Large
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      # preferredDuringSchedulingIgnoredDuringExecution:
+      # requiredDuringSchedulingRequiredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: color
+              operator: Equals
+              values: blue
+
+
+        # nodeSelectorTerms:
+        #   - matchExpressions:
+        #     - key: size
+        #       operator: In
+        #       values:
+        #         - Large
+        #         - Medium
+
+            # - key: size
+            #   operator: NotIn
+            #   values:
+            #     - Small
+
+            # - key: size
+            #   operator: Exists
+              ## checks if the label "size" exists on the node
